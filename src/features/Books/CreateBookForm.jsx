@@ -17,19 +17,7 @@ function CreateBookForm({ BookToEdit = {} }) {
         Authors,
         error,
     } = useAuthors();
-    //
-    // const formattedPublicationDate = publicationDate
-    //                                  ? new Date(publicationDate).toISOString().split("T")[0]
-    //                                  : "";
-
-    const { register, handleSubmit, reset, formState, setValue } = useForm({
-                                                                               defaultValues: isEditSession
-                                                                                              ? {
-                                                                                       ...editValues,
-                                                                                       publicationDate: formattedPublicationDate,
-                                                                                   }
-                                                                                              : {},
-                                                                           });
+    const { register, handleSubmit, reset, formState, setValue } = useForm({ defaultValues: isEditSession ? { ...editValues, publicationDate: formattedPublicationDate, } : {}, });
 
     const { isCreating, createBook } = useCreateBook(reset);
     const { isEditing, editBook } = useEditBook();

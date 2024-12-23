@@ -4,8 +4,8 @@ import Row from "../ui/Row";
 import Button from "../ui/Button.jsx";
 import { useState } from "react";
 import CreateBookForm from "../features/Books/CreateBookForm.jsx";
-import Spinner               from "../ui/Spinner.jsx";
-import { useBooks }          from "../hooks/useBooks.js";
+import Spinner from "../ui/Spinner.jsx";
+import { useBooks } from "../hooks/useBooks.js";
 import { HiCalendar, HiMap } from "react-icons/hi2";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -59,7 +59,6 @@ const Title = styled.h2`
     margin-bottom: 0.75rem;
 `;
 
-
 const Info = styled.div`
     margin-bottom: 1rem;
 `;
@@ -78,9 +77,36 @@ const InfoItem = styled.div`
     }
 `;
 
+const SearchInput = styled.input`
+    width: 100%;
+    max-width: 28rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-grey-300);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    &::placeholder {
+        color: var(--color-grey-500);
+        font-style: italic;
+    }
+`;
+
+
 function Books() {
     const [showForm, setShowForm] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const { isPending: isBookPending, Books, error } = useBooks();
+
+    const filteredBooks = Books?.filter((book) => book.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
     if (isBookPending) return <Spinner />;
     if (error) return <p>Error loading data. Please try again later.</p>;
@@ -89,28 +115,35 @@ function Books() {
     return (
         <>
             <Row>
-                <Heading as="h1">My Books</Heading>
                 <Button onClick={() => setShowForm((prev) => !prev)}>
                     {showForm ? "Close Form" : "Add New Book"}
                 </Button>
+                {showForm && (
+                    <Row>
+                        <CreateBookForm />
+                    </Row>
+                )}
             </Row>
-            {showForm && (
-                <Row>
-                    <CreateBookForm />
+                <Row type='horizontal'>
+                    <Heading as="h1">My Books</Heading>
+                    <SearchInput
+                        type="text"
+                        placeholder="Search by title..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </Row>
-            )}
-            <Row type="horizontal" style={{ flexWrap: "wrap", gap: "1.6rem", cursor: 'pointer' }}>
-                {Books.map(({ id, title, description, publicationDate, genre, author }) => (
-
+            <Row type="horizontal" style={{ flexWrap: "wrap", gap: "1.6rem", cursor: "pointer" }}>
+                {filteredBooks.map(({ id, title, description, publicationDate, genre, author }) => (
                     <Card key={id}>
                         <Link to={`/books/${id}`}>
-                        <ImageWrapper>
-                            <Image
-                                src="https://www.coe.int/documents/24916852/0/Supporters3.jpg/63b405d6-be6d-d2ec-bd11-0f03c6ca8130?t=1503560660000" // Static image
-                                alt={`Cover of ${title}`}
-                            />
-                            <Badge>{genre}</Badge>
-                        </ImageWrapper>
+                            <ImageWrapper>
+                                <Image
+                                    src="./glasses-book.jpg" // Static image
+                                    alt={`Cover of ${title}`}
+                                />
+                                <Badge>{genre}</Badge>
+                            </ImageWrapper>
                         </Link>
                         <Content>
                             <Title>{title}</Title>
@@ -120,7 +153,7 @@ function Books() {
                                     <span>{new Date(publicationDate).toLocaleDateString()}</span>
                                 </InfoItem>
                                 <InfoItem>
-                                    <BsPersonCircle/>
+                                    <BsPersonCircle />
                                     <span>{author ? `${author.firstName} ${author.lastName}` : "Unknown Author"}</span>
                                 </InfoItem>
                             </Info>
