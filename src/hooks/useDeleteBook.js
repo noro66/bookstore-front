@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { deleteBook as deleteCaniApi } from "../../services/apiBooks";
+import toast                           from "react-hot-toast";
+import { deleteBook as deleteCaniApi } from "../services/apiBooks.js";
 
 export function useDeleteBook() {
   const queryClient = useQueryClient();

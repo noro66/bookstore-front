@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBooks } from "../../services/apiBooks";
+import { getBooks } from "../services/apiBooks.js";
 
 export function useBooks() {
   const {

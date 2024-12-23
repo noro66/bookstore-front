@@ -4,10 +4,10 @@ import Button from "../../ui/Button";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 
-import FormRow from "../../ui/FormRow";
-import { useCreateBook } from "./useCreateBook";
-import { useEditBook } from "./useEditBook";
-import { useAuthors } from "./useAuthors.js";
+import FormRow           from "../../ui/FormRow";
+import { useCreateBook } from "../../hooks/useCreateBook.js";
+import { useEditBook }   from "../../hooks/useEditBook.js";
+import { useAuthors }    from "../../hooks/useAuthors.js";
 
 function CreateBookForm({ BookToEdit = {} }) {
     const { _id: editId, ...editValues } = BookToEdit;

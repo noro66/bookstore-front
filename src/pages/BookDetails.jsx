@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useBooks } from "../features/Books/useBooks";
+import { useBooks } from "../hooks/useBooks.js";
 import Spinner from "../ui/Spinner";
 import { HiCalendar, HiUser, HiBookOpen } from "react-icons/hi2";
 import styled from "styled-components";
+import ReviewForm from '../features/Reviews/ReviewForm.jsx'; // Import the ReviewForm component
 
 // Styled Components
 const Container = styled.div`
@@ -86,11 +87,11 @@ const ReviewItem = styled.li`
 `;
 
 const BookImage = styled.img`
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 1.5rem;
-  border-radius: 8px;
-  object-fit: cover;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    object-fit: cover;
 `;
 
 function BookDetails() {
@@ -111,7 +112,7 @@ function BookDetails() {
 	return (
 		<Container>
 			<BookImage src="https://via.placeholder.com/300x450" alt="Book Cover" />
-			<BookTitle>Title : {bookDetails.title}</BookTitle>
+			<BookTitle>Title: {bookDetails.title}</BookTitle>
 			<div>
 				<Author>
 					<HiUser size={20} />
@@ -127,7 +128,9 @@ function BookDetails() {
 						<span>{new Date(bookDetails.publicationDate).toLocaleDateString()}</span>
 					</InfoItem>
 				</Info>
-				<Description> <strong>Description : </strong> {bookDetails.description}</Description>
+				<Description>
+					<strong>Description: </strong> {bookDetails.description}
+				</Description>
 			</div>
 
 			<ReviewSection>
@@ -143,6 +146,9 @@ function BookDetails() {
 						 ))}
 					 </ReviewList>
 				 )}
+
+				{/* Use the ReviewForm component */}
+				<ReviewForm />
 			</ReviewSection>
 		</Container>
 	);

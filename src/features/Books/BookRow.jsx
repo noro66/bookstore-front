@@ -3,8 +3,8 @@ import { useState } from "react";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import CreateBookForm from "./CreateBookForm.jsx";
 import { HiUpload, HiUserAdd } from "react-icons/hi";
-import ButtonIcon from "../../ui/ButtonIcon.jsx";
-import { useDeleteBook } from "./useDeleteBook.js";
+import ButtonIcon        from "../../ui/ButtonIcon.jsx";
+import { useDeleteBook } from "../../hooks/useDeleteBook.js";
 
 const TableRow = styled.div`
   display: grid;

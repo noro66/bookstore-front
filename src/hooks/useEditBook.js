@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEditBook } from "../../services/apiBooks";
-import toast from "react-hot-toast";
+import { createEditBook }              from "../services/apiBooks.js";
+import toast                           from "react-hot-toast";
 
 export function useEditBook() {
   const queryclient = useQueryClient();
@@ -8,7 +8,7 @@ export function useEditBook() {
   const { mutate: editBook, isPending: isEditing } = useMutation({
     mutationFn: ({ newBookData, id }) => createEditBook(newBookData, id),
     onSuccess: () => {
-      toast.success("New Book succussfully Edied !");
+      toast.success("New Book successfully Edited !");
       queryclient.invalidateQueries({
         queryKey: ["Books"],
       });
