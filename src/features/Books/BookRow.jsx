@@ -51,7 +51,7 @@ const Status = styled.div`
 export default function BookRow({ book }) {
   const [showForm, setShowForm] = useState(false);
 
-  const { isDeleting, deleteBook } = useDeleteBook();
+
   const {
     id,
     title,
@@ -77,9 +77,6 @@ export default function BookRow({ book }) {
           <div>
             <ButtonIcon onClick={() => setShowForm((prev) => !prev)}>
               <HiPencil />
-            </ButtonIcon>
-            <ButtonIcon disabled={isDeleting} onClick={() => deleteBook(id)}>
-              <HiTrash />
             </ButtonIcon>
           </div>
         </TableRow>

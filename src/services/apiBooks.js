@@ -31,7 +31,7 @@ export async function createEditBook(newBook, id) {
 
 export async function deleteBook(id) {
   try {
-    const response = await customAxios.delete(`Books/${id}`);
+    const response = await customAxios.delete(`books/${id}`);
     return response.data.member;
   } catch (error) {
     console.error(error);

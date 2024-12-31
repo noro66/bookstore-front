@@ -5,10 +5,11 @@ import Button from "../ui/Button.jsx";
 import { useState } from "react";
 import CreateBookForm from "../features/Books/CreateBookForm.jsx";
 import Spinner from "../ui/Spinner.jsx";
-import { useBooks } from "../hooks/useBooks.js";
-import { HiCalendar, HiMap } from "react-icons/hi2";
-import { BsPersonCircle } from "react-icons/bs";
+import { useBooks }                     from "../hooks/useBooks.js";
+import { HiCalendar , HiMap , HiTrash } from "react-icons/hi2";
+import { BsPersonCircle }               from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useDeleteBook } from "../hooks/useDeleteBook.js";
 
 // Styled components
 const Card = styled.div`
@@ -99,18 +100,35 @@ const SearchInput = styled.input`
         font-style: italic;
     }
 `;
+const ButtonIcon = styled.button`
+  background: none;
+  border: none;
+  padding: 0.6rem;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s;
 
+  &:hover {
+    background-color: var(--color-red-100);
+  }
+
+  & svg {
+    width: 2.2rem;
+    height: 2.2rem;
+    color: var(--color-brand-600);
+  }
+`;
 
 function Books() {
     const [showForm, setShowForm] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const { isPending: isBookPending, Books, error } = useBooks();
 
+    const { isDeleting, deleteBook } = useDeleteBook();
+
     const filteredBooks = Books?.filter((book) => book.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
     if (isBookPending) return <Spinner />;
     if (error) return <p>Error loading data. Please try again later.</p>;
-    if (!Books || Books.length === 0) return <p>No books found. Add one to get started 😊.</p>;
 
     return (
         <>
@@ -133,34 +151,38 @@ function Books() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </Row>
-            <Row type="horizontal" style={{ flexWrap: "wrap", gap: "1.6rem", cursor: "pointer" }}>
-                {filteredBooks.map(({ id, title, description, publicationDate, genre, author }) => (
-                    <Card key={id}>
-                        <Link to={`/books/${id}`}>
+            { !Books || Books.length === 0 ? <p>No books found. Add one to get started 😊.</p> :
+               ( <Row type="horizontal" style={ { flexWrap : "wrap" , gap : "1.6rem" , cursor : "pointer" } }>
+                { filteredBooks.map ( ( { id , title , description , publicationDate , genre , author } ) => (
+                    <Card key={ id }>
+                        <Link to={ `/books/${ id }` }>
                             <ImageWrapper>
                                 <Image
-                                    src="./glasses-book.jpg" // Static image
-                                    alt={`Cover of ${title}`}
+                                    src="./glasses-book.jpg"
+                                    alt={ `Cover of ${ title }` }
                                 />
-                                <Badge>{genre}</Badge>
+                                <Badge>{ genre }</Badge>
                             </ImageWrapper>
                         </Link>
                         <Content>
-                            <Title>{title}</Title>
+                            <Title>{ title }</Title>
                             <Info>
                                 <InfoItem>
-                                    <HiCalendar />
-                                    <span>{new Date(publicationDate).toLocaleDateString()}</span>
+                                    <HiCalendar/>
+                                    <span>{ new Date ( publicationDate ).toLocaleDateString () }</span>
                                 </InfoItem>
                                 <InfoItem>
-                                    <BsPersonCircle />
-                                    <span>{author ? `${author.firstName} ${author.lastName}` : "Unknown Author"}</span>
+                                    <BsPersonCircle/>
+                                    <span>{ author ? `${ author.firstName } ${ author.lastName }` : "Unknown Author" }</span>
                                 </InfoItem>
                             </Info>
+                            <ButtonIcon data-id={id} disabled={isDeleting} onClick={() => deleteBook(id)}>
+                                <HiTrash />
+                            </ButtonIcon>
                         </Content>
                     </Card>
-                ))}
-            </Row>
+                ) ) }
+            </Row>) }
         </>
     );
 }
