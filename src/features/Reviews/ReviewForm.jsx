@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useCreateReview } from "../../hooks/useCreateReview.js";
-import { useForm } from "react-hook-form";
+import { useState }        from "react";
+import { useCreateReview } from "./useCreateReview.js";
+import { useForm }         from "react-hook-form";
 import { useParams } from "react-router-dom";
 import styled from "styled-components"; // Import styled-components
 

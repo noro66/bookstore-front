@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useBooks } from "../hooks/useBooks.js";
-import Spinner from "../ui/Spinner";
+import { useBooks }            from "../features/Books/useBooks.js";
+import Spinner                 from "../ui/Spinner";
 import { HiCalendar, HiUser, HiBookOpen } from "react-icons/hi2";
 import styled from "styled-components";
 import ReviewForm from '../features/Reviews/ReviewForm.jsx'; // Import the ReviewForm component

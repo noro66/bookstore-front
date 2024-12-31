@@ -12,14 +12,14 @@ Before setting up the project, ensure you have the following installed:
 
 ## Installation
 
-### 1. Clone the Repository
+1. Clone the Repository
 
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/the-wild-oasis.git
-cd the-wild-oasis
-
+git clone https://github.com/noro66/bookstore-front.git
+cd bookstore-front
+```
 2. Install Dependencies
 
 Run the following command to install the required dependencies:

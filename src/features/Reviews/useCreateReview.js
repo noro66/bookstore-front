@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createReview } from "../services/apiReviews.js";
-import toast from "react-hot-toast";
+import { createReview }                from "../../services/apiReviews.js";
+import toast                           from "react-hot-toast";
 
 export function useCreateReview() {
 	const queryClient = useQueryClient();

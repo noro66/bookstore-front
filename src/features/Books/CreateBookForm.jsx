@@ -5,8 +5,8 @@ import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 
 import FormRow           from "../../ui/FormRow";
-import { useCreateBook } from "../../hooks/useCreateBook.js";
-import { useEditBook }   from "../../hooks/useEditBook.js";
+import { useCreateBook } from "./useCreateBook.js";
+import { useEditBook }   from "./useEditBook.js";
 import { useAuthors }    from "../../hooks/useAuthors.js";
 
 function CreateBookForm({ BookToEdit = {} }) {

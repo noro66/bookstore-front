@@ -4,12 +4,13 @@ import Row from "../ui/Row";
 import Button from "../ui/Button.jsx";
 import { useState } from "react";
 import CreateBookForm from "../features/Books/CreateBookForm.jsx";
-import Spinner from "../ui/Spinner.jsx";
-import { useBooks }                     from "../hooks/useBooks.js";
+import Spinner                          from "../ui/Spinner.jsx";
+import { useBooks }                     from "../features/Books/useBooks.js";
 import { HiCalendar , HiMap , HiTrash } from "react-icons/hi2";
 import { BsPersonCircle }               from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { useDeleteBook } from "../hooks/useDeleteBook.js";
+import { Link }          from "react-router-dom";
+import { useDeleteBook } from "../features/Books/useDeleteBook.js";
+import button from "../ui/Button.jsx";
 
 // Styled components
 const Card = styled.div`
@@ -80,31 +81,41 @@ const InfoItem = styled.div`
 
 const SearchInput = styled.input`
     width: 100%;
-    max-width: 28rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--color-grey-300);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 32rem; 
+    padding: 1rem 1.5rem;
+    border-radius: 2rem; 
+    font-size: 1.25rem;
+    margin-bottom: 2rem; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 
     &:focus {
         outline: none;
-        border-color: var(--color-primary);
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        border-color: var(--color-brand-600);
     }
 
     &::placeholder {
         color: var(--color-grey-500);
         font-style: italic;
+        font-size: 1rem; /* Slightly smaller placeholder font for contrast */
+    }
+
+    &:hover {
+        border-color: var(--color-brand-600); /* Highlight border on hover */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Add hover effect */
+    }
+    
+    &::placeholder{
+        font-size: 2rem;
+        font-style: normal;
     }
 `;
+
 const ButtonIcon = styled.button`
   background: none;
   border: none;
   padding: 0.6rem;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--color-brand-600);
   transition: all 0.2s;
 
   &:hover {
@@ -115,6 +126,33 @@ const ButtonIcon = styled.button`
     width: 2.2rem;
     height: 2.2rem;
     color: var(--color-brand-600);
+  }
+`;
+
+
+const CustomButton = styled.button`
+  background-color: ${(props) => (props.active ? "var(--color-brand-600)" : "var(--color-brand-700)")};
+   width: 22rem; 
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: ${(props) => (props.active ? '#ff6b81' : '#4682b4')};
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
   }
 `;
 
@@ -133,9 +171,9 @@ function Books() {
     return (
         <>
             <Row>
-                <Button onClick={() => setShowForm((prev) => !prev)}>
+                <CustomButton onClick={() => setShowForm((prev) => !prev)}>
                     {showForm ? "Close Form" : "Add New Book"}
-                </Button>
+                </CustomButton>
                 {showForm && (
                     <Row>
                         <CreateBookForm />
